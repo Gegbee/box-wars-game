@@ -12,7 +12,6 @@ func _physics_process(delta):
 	)
 	dir_input = dir_input.normalized()
 	if dir_input.length() > 0:
-		print(dir_input.dot(Vector2(cos(rotation), sin(rotation))))
 		if abs(dir_input.dot(Vector2(cos(rotation), sin(rotation)))) > 0.5:
 			$AnimationPlayer.play("Walking")
 		else:
