@@ -1,0 +1,89 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Inter-Bold.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://Background.png" type="Texture" id=2]
+[ext_resource path="res://Offline/Offline.gd" type="Script" id=3]
+
+[sub_resource type="DynamicFont" id=2]
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=1]
+size = 22
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 50
+font_data = ExtResource( 1 )
+
+[node name="Offline" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 3 )
+
+[node name="TextureRect" type="TextureRect" parent="."]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = 1533.0
+margin_bottom = 905.0
+rect_scale = Vector2( 0.4, 0.4 )
+texture = ExtResource( 2 )
+stretch_mode = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 142.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
+margin_left = 356.0
+margin_top = 104.0
+margin_right = 516.0
+margin_bottom = 244.0
+
+[node name="Username" type="LineEdit" parent="CenterContainer/VBoxContainer"]
+margin_right = 160.0
+margin_bottom = 30.0
+rect_min_size = Vector2( 160, 0 )
+custom_fonts/font = SubResource( 2 )
+placeholder_text = "Username..."
+
+[node name="IP" type="LineEdit" parent="CenterContainer/VBoxContainer"]
+margin_top = 34.0
+margin_right = 160.0
+margin_bottom = 64.0
+rect_min_size = Vector2( 160, 0 )
+custom_fonts/font = SubResource( 2 )
+placeholder_text = "IP..."
+
+[node name="Server" type="Button" parent="CenterContainer/VBoxContainer"]
+margin_top = 68.0
+margin_right = 160.0
+margin_bottom = 102.0
+custom_fonts/font = SubResource( 1 )
+text = "SERVER"
+
+[node name="Client" type="Button" parent="CenterContainer/VBoxContainer"]
+margin_top = 106.0
+margin_right = 160.0
+margin_bottom = 140.0
+custom_fonts/font = SubResource( 1 )
+text = "CLIENT"
+
+[node name="CenterContainer2" type="CenterContainer" parent="."]
+anchor_right = 1.0
+margin_bottom = 217.0
+
+[node name="Label" type="Label" parent="CenterContainer2"]
+margin_left = 317.0
+margin_top = 77.0
+margin_right = 556.0
+margin_bottom = 139.0
+custom_colors/font_color_shadow = Color( 0, 0, 0, 0.388235 )
+custom_constants/shadow_offset_x = 10
+custom_constants/shadow_offset_y = 10
+custom_fonts/font = SubResource( 3 )
+text = "box wars."
+
+[connection signal="pressed" from="CenterContainer/VBoxContainer/Server" to="." method="_on_Server_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/Client" to="." method="_on_Client_pressed"]

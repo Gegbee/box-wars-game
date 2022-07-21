@@ -129,6 +129,7 @@ color = Color( 0, 0, 0, 0.411765 )
 polygon = PoolVector2Array( -8, -8, -8, 8, 8, 8, 8, -8 )
 
 [node name="Body" type="Sprite" parent="."]
+visible = false
 position = Vector2( 2, 0 )
 rotation = 1.5708
 scale = Vector2( 0.16, 0.16 )
@@ -136,7 +137,6 @@ texture = ExtResource( 4 )
 offset = Vector2( 1.13687e-13, -32.6563 )
 
 [node name="Body3" type="Sprite" parent="."]
-visible = false
 position = Vector2( 1, 0 )
 rotation = 1.5708
 scale = Vector2( 0.16, 0.16 )
