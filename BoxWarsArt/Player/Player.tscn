@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Player/Player.gd" type="Script" id=1]
 [ext_resource path="res://Player/Player.png" type="Texture" id=2]
@@ -96,6 +96,9 @@ tracks/1/keys = {
 "values": [ Vector2( -10, 4 ), Vector2( 10, 4 ) ]
 }
 
+[sub_resource type="CircleShape2D" id=5]
+radius = 21.0
+
 [node name="Player" type="KinematicBody2D"]
 script = ExtResource( 1 )
 
@@ -137,6 +140,7 @@ texture = ExtResource( 4 )
 offset = Vector2( 1.13687e-13, -32.6563 )
 
 [node name="Body3" type="Sprite" parent="."]
+visible = false
 position = Vector2( 1, 0 )
 rotation = 1.5708
 scale = Vector2( 0.16, 0.16 )
@@ -144,7 +148,6 @@ texture = ExtResource( 5 )
 offset = Vector2( 1.13687e-13, -32.6563 )
 
 [node name="Body4" type="Sprite" parent="."]
-visible = false
 position = Vector2( -3, 0 )
 rotation = 1.5708
 scale = Vector2( 0.16, 0.16 )
@@ -161,3 +164,8 @@ playback_default_blend_time = 0.1
 anims/Idle = SubResource( 2 )
 anims/Shuffle = SubResource( 4 )
 anims/Walking = SubResource( 3 )
+
+[node name="ItemDetection" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ItemDetection"]
+shape = SubResource( 5 )

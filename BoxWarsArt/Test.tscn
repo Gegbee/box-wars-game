@@ -1,8 +1,10 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Inter-Bold.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://Player/Player.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Background.png" type="Texture" id=3]
+[ext_resource path="res://DroppedItems/DroppedItem.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Assets/PewpiDropped.png" type="Texture" id=5]
 
 [sub_resource type="DynamicFont" id=1]
 size = 128
@@ -51,3 +53,8 @@ margin_bottom = 32.0
 rect_scale = Vector2( 0.4, 0.4 )
 custom_fonts/font = SubResource( 1 )
 text = "box wars."
+
+[node name="DroppedItem" parent="." instance=ExtResource( 4 )]
+position = Vector2( 56, -8 )
+item_name = "pewpi"
+item_sprite = ExtResource( 5 )
