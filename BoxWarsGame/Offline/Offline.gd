@@ -1,7 +1,5 @@
 extends Control
 
-
-
 onready var username_input = $CenterContainer/VBoxContainer/Username
 onready var ip_input = $CenterContainer/VBoxContainer/IP
 

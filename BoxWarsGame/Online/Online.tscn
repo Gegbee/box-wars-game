@@ -1,16 +1,18 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Background.png" type="Texture" id=1]
 [ext_resource path="res://Online/Online.gd" type="Script" id=2]
+[ext_resource path="res://Online/WalkableButton.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Online/Door.tscn" type="PackedScene" id=4]
 
 [node name="Online" type="Node2D"]
 script = ExtResource( 2 )
 
 [node name="TextureRect" type="TextureRect" parent="."]
-margin_left = -1499.0
-margin_top = -1003.0
-margin_right = 1458.0
-margin_bottom = 920.0
+margin_left = -1536.0
+margin_top = -945.0
+margin_right = 1421.0
+margin_bottom = 978.0
 texture = ExtResource( 1 )
 stretch_mode = 2
 
@@ -19,4 +21,9 @@ scale = Vector2( 16, 16 )
 color = Color( 1, 0, 0, 1 )
 polygon = PoolVector2Array( 1, 1, 1, -1, -1, -1, -1, 1 )
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="WalkableButton" parent="." instance=ExtResource( 3 )]
+position = Vector2( -60, 83 )
+
+[node name="Door" parent="." instance=ExtResource( 4 )]
+position = Vector2( -316, 1 )
+scale = Vector2( 3, 3 )
