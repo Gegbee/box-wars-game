@@ -4,7 +4,7 @@ extends CanvasModulate
 export var gradient : Gradient
 
 var _t: float = 0.0
-export var time_for_full_cycle : float = 120.0
+export var time_for_full_cycle : float = 40.0
 
 func _process(delta):
 	_t += delta/time_for_full_cycle
