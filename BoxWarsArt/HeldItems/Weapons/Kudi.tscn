@@ -5,13 +5,14 @@
 
 [node name="Gun" instance=ExtResource( 1 )]
 automatic = true
-fire_rate = 0.06
-magazine_size = 18
+fire_rate = 0.08
+magazine_size = 22
 reload_time = 3.0
-damage = 10
-bullet_speed = 300
-min_accuracy = 6.0
-max_accuracy = 12.0
+damage = 7
+accuracy_decrease = 1.5
+accuracy_increase = 0.5
+max_accuracy = 14.0
+accuracy_increase_delay = 0.0
 
 [node name="Sprite" parent="." index="0"]
 texture = ExtResource( 2 )

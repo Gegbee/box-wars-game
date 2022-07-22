@@ -20,7 +20,9 @@ export var knockback_resistance : float = 1.0
 var impulse_vector : Vector2 = Vector2()
 var impulse_strength : float = 0.0
 
-
+func _ready():
+	add_item("fists")
+	
 func _physics_process(delta):
 	impulse_vector.x = lerp(impulse_vector.x, 0, 5.0 * delta)
 	impulse_vector.y = lerp(impulse_vector.y, 0, 5.0 * delta)
@@ -60,7 +62,9 @@ func _physics_process(delta):
 			add_item(cur_item_to_pickup.item_name)
 			cur_item_to_pickup.queue_free()
 			cur_item_to_pickup = null
-	
+		else:
+			add_item("fists")
+			
 	use_item()
 	
 func use_item():
@@ -75,7 +79,14 @@ func use_item():
 				cur_item.shoot(0, rotation, "Bullet")
 		if Input.is_action_just_pressed("reload"):
 			cur_item.reload()
-			
+	elif Global.held_items[cur_item_held_name]["type"] == "melee":
+		if cur_item.automatic:
+			if Input.is_action_pressed("shoot"):
+				cur_item.attack()
+		else:
+			if Input.is_action_just_pressed("shoot"):
+				cur_item.attack()
+				
 func add_item(_name):
 	cur_item_held_name = _name.to_lower()
 	cur_item = Global.held_items[cur_item_held_name]["scene"].instance()
@@ -83,11 +94,12 @@ func add_item(_name):
 	cur_item.position = Global.held_items[cur_item_held_name]["hold_position"]
 	
 func remove_item():
-	var dropped_item = Global.DROPPED_ITEM.instance()
-	dropped_item.item_name = cur_item_held_name
-	dropped_item.assign_sprite()
-	get_tree().get_current_scene().add_child(dropped_item)
-	dropped_item.global_position = global_position
+	if Global.held_items[cur_item_held_name]["drop"]:
+		var dropped_item = Global.DROPPED_ITEM.instance()
+		dropped_item.item_name = cur_item_held_name
+		dropped_item.assign_sprite()
+		get_tree().get_current_scene().add_child(dropped_item)
+		dropped_item.global_position = global_position
 	cur_item.queue_free()
 	cur_item = null
 	cur_item_held_name = ""
