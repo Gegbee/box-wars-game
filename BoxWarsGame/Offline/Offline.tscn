@@ -36,10 +36,10 @@ anchor_bottom = 1.0
 margin_top = 142.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
-margin_left = 356.0
-margin_top = 104.0
-margin_right = 516.0
-margin_bottom = 244.0
+margin_left = 400.0
+margin_top = 129.0
+margin_right = 560.0
+margin_bottom = 269.0
 
 [node name="Username" type="LineEdit" parent="CenterContainer/VBoxContainer"]
 margin_right = 160.0
@@ -75,9 +75,9 @@ anchor_right = 1.0
 margin_bottom = 217.0
 
 [node name="Label" type="Label" parent="CenterContainer2"]
-margin_left = 317.0
+margin_left = 360.0
 margin_top = 77.0
-margin_right = 556.0
+margin_right = 599.0
 margin_bottom = 139.0
 custom_colors/font_color_shadow = Color( 0, 0, 0, 0.388235 )
 custom_constants/shadow_offset_x = 10

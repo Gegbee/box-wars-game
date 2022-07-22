@@ -8,22 +8,21 @@
 [node name="Online" type="Node2D"]
 script = ExtResource( 2 )
 
-[node name="TextureRect" type="TextureRect" parent="."]
-margin_left = -1536.0
-margin_top = -945.0
-margin_right = 1421.0
-margin_bottom = 978.0
-texture = ExtResource( 1 )
-stretch_mode = 2
-
-[node name="Polygon2D" type="Polygon2D" parent="."]
-scale = Vector2( 16, 16 )
-color = Color( 1, 0, 0, 1 )
-polygon = PoolVector2Array( 1, 1, 1, -1, -1, -1, -1, 1 )
-
 [node name="WalkableButton" parent="." instance=ExtResource( 3 )]
 position = Vector2( -60, 83 )
 
 [node name="Door" parent="." instance=ExtResource( 4 )]
 position = Vector2( -316, 1 )
 scale = Vector2( 3, 3 )
+
+[node name="Background" type="Node2D" parent="."]
+z_index = -12
+
+[node name="TextureRect" type="TextureRect" parent="Background"]
+modulate = Color( 1, 1, 1, 0.439216 )
+margin_left = -3120.0
+margin_top = -1833.0
+margin_right = 3134.0
+margin_bottom = 1996.0
+texture = ExtResource( 1 )
+stretch_mode = 2

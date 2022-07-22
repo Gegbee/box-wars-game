@@ -7,6 +7,7 @@ const ACCEL : float = 10.0
 
 var cur_item_to_pickup = null
 var cur_item_held_name : String = ""
+var cur_item = null
 
 var invincible : bool = false
 export var health_bar_path : NodePath
@@ -53,23 +54,42 @@ func _physics_process(delta):
 			cur_item_to_pickup = item
 
 	if Input.is_action_just_pressed("interact"):
-		if cur_item_held_name == "":
-			if cur_item_to_pickup:
-				add_item(cur_item_to_pickup.item_name)
-				cur_item_to_pickup.queue_free()
-				cur_item_to_pickup = null
-		else:
+		if cur_item:
 			remove_item()
+		if cur_item_to_pickup:
+			add_item(cur_item_to_pickup.item_name)
+			cur_item_to_pickup.queue_free()
+			cur_item_to_pickup = null
 	
+	use_item()
+	
+func use_item():
+	if !cur_item:
+		return
+	if Global.held_items[cur_item_held_name]["type"] == "gun":
+		if cur_item.automatic:
+			if Input.is_action_pressed("shoot"):
+				cur_item.shoot(0, rotation, "Bullet")
+		else:
+			if Input.is_action_just_pressed("shoot"):
+				cur_item.shoot(0, rotation, "Bullet")
+		if Input.is_action_just_pressed("reload"):
+			cur_item.reload()
+			
 func add_item(_name):
 	cur_item_held_name = _name.to_lower()
-
+	cur_item = Global.held_items[cur_item_held_name]["scene"].instance()
+	add_child(cur_item)
+	cur_item.position = Global.held_items[cur_item_held_name]["hold_position"]
+	
 func remove_item():
 	var dropped_item = Global.DROPPED_ITEM.instance()
 	dropped_item.item_name = cur_item_held_name
-	dropped_item.item_sprite = Global.dropped_items[cur_item_held_name]["sprite"]
+	dropped_item.assign_sprite()
 	get_tree().get_current_scene().add_child(dropped_item)
 	dropped_item.global_position = global_position
+	cur_item.queue_free()
+	cur_item = null
 	cur_item_held_name = ""
 	
 func damage(dmg : int, impulse_dir : Vector2 = Vector2(), strength : float = 0):

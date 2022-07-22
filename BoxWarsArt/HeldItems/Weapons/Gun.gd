@@ -1,4 +1,4 @@
-extends HeldItem
+extends Node2D
 
 export (bool) var automatic = true
 export (float) var fire_rate = 0.5
@@ -64,12 +64,14 @@ func _process(delta):
 
 func reload():
 	if reload_timer.is_stopped():
+		$AnimationPlayer.play("Reloading")
 		can_fire = false
 	#	player_ui.reload_ammo(reload_time)
 		reload_timer.start(reload_time)
 	
-func attack(id : int, player_rotation : float, _name : String):
+func shoot(id : int, player_rotation : float, _name : String):
 	if can_fire and current_magazine > 0:
+		$AnimationPlayer.play("Shooting")
 		current_downtime = 0
 		can_fire = false
 		shot_timer.start(fire_rate)
@@ -78,7 +80,7 @@ func attack(id : int, player_rotation : float, _name : String):
 			var bullet_instance = BULLET.instance()
 			#bullet_instance.damage = damage
 			#bullet_instance.speed = bullet_speed
-			var absolute_rotation = player_rotation #+ (rand_range(-current_accuracy, current_accuracy) / 100 * PI)
+			var absolute_rotation = player_rotation + (rand_range(-current_accuracy, current_accuracy) / 100 * PI)
 			var bullet_direction = Vector2(cos(absolute_rotation),sin(absolute_rotation))
 			#bullet_instance.direction = bullet_direction
 			if shoot_pos:
@@ -94,7 +96,8 @@ func attack(id : int, player_rotation : float, _name : String):
 func _on_ReloadTimer_timeout():
 	update_magazine(magazine_size)
 	can_fire = true
-
+	$AnimationPlayer.play("EndReloading")
+	
 func _on_ShotTimer_timeout():
 	if reload_timer.is_stopped():
 		can_fire = true

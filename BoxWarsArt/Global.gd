@@ -9,13 +9,20 @@ var held_items : Dictionary = {
 	},
 	"pewpi" : {
 		"type" : "gun",
-		"hold_position" : Vector2(),
-		"gun_attributes" : [],
-		"sprite_attributes" : [preload("res://Assets/PewpiHeld.png"), 3, Vector2()]
+		"scene" : preload("res://HeldItems/Weapons/Pewpi.tscn"),
+		"hold_position" : Vector2(5, 0)
+	},
+	"kudi" : {
+		"type" : "gun",
+		"scene" : preload("res://HeldItems/Weapons/Kudi.tscn"),
+		"hold_position" : Vector2(5, 0)
 	}
 }
 var dropped_items : Dictionary = {
 	"pewpi" : {
 		"sprite" : preload("res://Assets/PewpiDropped.png")
+	},
+	"kudi" : {
+		"sprite" : preload("res://Assets/KudiDropped.png")
 	}
 }
