@@ -26,12 +26,14 @@ signal OnEntityDead()
 
 func _ready():
 	add_to_group("player")
+	
+	yield(get_tree(), "idle_frame")
+	
 	if is_network_master():
 		$Camera2D.current = true
-		
+	
 func _physics_process(delta):
 	if is_network_master():
-		
 		impulse_vector.x = lerp(impulse_vector.x, 0, 5.0 * delta)
 		impulse_vector.y = lerp(impulse_vector.y, 0, 5.0 * delta)
 		if impulse_vector.length() < 0.2:
@@ -66,7 +68,7 @@ func _physics_process(delta):
 		
 	else:
 		rotation = lerp_angle(rotation, puppet_rotation, delta * 8)
-	
+		
 		if velocity.length() > 60.0:
 			if abs(velocity.normalized().dot(Vector2(cos(rotation), sin(rotation)))) > 0.5:
 				$AnimationPlayer.play("PlayerWalking")
@@ -74,7 +76,11 @@ func _physics_process(delta):
 				$AnimationPlayer.play("PlayerShuffle")
 		else:
 			$AnimationPlayer.play("PlayerIdle")
-		
+	
+	print(username)
+	$Position2D/Username.text = Network.username
+	$Position2D.global_rotation = 0
+	
 func puppet_position_set(new_value) -> void:
 	puppet_position = new_value
 	$tween.interpolate_property(self, "global_position", global_position, puppet_position, 0.1)

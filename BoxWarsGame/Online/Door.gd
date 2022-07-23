@@ -11,11 +11,11 @@ func _ready():
 puppetsync func open():
 	opened = true
 	$CollisionShape2D.set_deferred("disabled", true)
-	#$Position2D.rotate(lerp(0, deg2rad(110), 0.3))
+	$Position2D.rotate(lerp(0, deg2rad(110), 0.3))
 	
 	
-	$Tween.interpolate_property($Polygon2D, "scale", Vector2(0, 1), Vector2(1, 0), 0.3, Tween.TRANS_LINEAR, Tween.EASE_IN)
-	$Tween.start()
+#	$Tween.interpolate_property($Polygon2D, "scale", Vector2(0, 1), Vector2(1, 0), 0.3, Tween.TRANS_LINEAR, Tween.EASE_IN)
+#	$Tween.start()
 
 #puppetsync func close():
 #	$CollisionShape2D.set_deferred("disabled", true)

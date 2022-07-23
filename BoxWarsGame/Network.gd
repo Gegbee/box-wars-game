@@ -94,9 +94,9 @@ remote func instance_player(id, _username):
 	var player_instance = PLAYER.instance()
 	player_instance.name = str(id)
 	print(player_instance.name)
-	player_instance.username = _username
 	player_instance.set_network_master(id)
 	Objects.add_child(player_instance)
+	player_instance.username = _username
 	if get_tree().get_network_unique_id() == id:
 		Global.controlled_player = player_instance
 	return player_instance
