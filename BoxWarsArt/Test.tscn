@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Inter-Bold.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://Player/Player.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Background.png" type="Texture" id=3]
 [ext_resource path="res://DroppedItems/DroppedItem.tscn" type="PackedScene" id=4]
 [ext_resource path="res://DayCycle.tscn" type="PackedScene" id=5]
+[ext_resource path="res://TheBox.png" type="Texture" id=6]
 
 [sub_resource type="DynamicFont" id=1]
 size = 128
@@ -21,8 +22,6 @@ glow_blend_mode = 0
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2( 0.5, 0.5 )
-
-[node name="Player" parent="." instance=ExtResource( 2 )]
 
 [node name="LabelShadow" type="Node2D" parent="."]
 z_index = -12
@@ -59,16 +58,30 @@ rect_scale = Vector2( 0.4, 0.4 )
 custom_fonts/font = SubResource( 1 )
 text = "box wars."
 
-[node name="DroppedItem" parent="." instance=ExtResource( 4 )]
-position = Vector2( 40, -24 )
-item_name = "pewpi"
-
-[node name="DroppedItem2" parent="." instance=ExtResource( 4 )]
-position = Vector2( 88, -8 )
-item_name = "kudi"
-
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource( 2 )
 
 [node name="DayCycle" parent="." instance=ExtResource( 5 )]
 color = Color( 1, 1, 1, 1 )
+
+[node name="Player" parent="." instance=ExtResource( 2 )]
+position = Vector2( 24, 144 )
+
+[node name="DroppedItem" parent="." instance=ExtResource( 4 )]
+position = Vector2( 64, 120 )
+item_name = "pewpi"
+
+[node name="DroppedItem2" parent="." instance=ExtResource( 4 )]
+position = Vector2( 112, 136 )
+item_name = "kudi"
+
+[node name="TheBox" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionPolygon2D" parent="TheBox"]
+polygon = PoolVector2Array( -195, -48, -195, 117, -150, 117, -150, -3, 150, -2, 150, 274, -150, 274, -150, 174, -195, 174, -195, 320, 195, 320, 195, -48 )
+
+[node name="Sprite" type="Sprite" parent="TheBox"]
+position = Vector2( 0, 136 )
+scale = Vector2( 0.15, 0.15 )
+z_index = 20
+texture = ExtResource( 6 )

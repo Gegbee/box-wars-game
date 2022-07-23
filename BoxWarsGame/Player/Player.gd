@@ -24,12 +24,18 @@ onready var health : int = MAX_HEALTH
 puppet var puppet_health : int = 100 setget puppet_health_set
 signal OnEntityDead()
 
+var cur_item_to_pickup = null
+var cur_item_held_name : String = ""
+var cur_item = null
+
 func _ready():
 	add_to_group("player")
 	
 	yield(get_tree(), "idle_frame")
 	
+	exchange_items(cur_item, null)
 	if is_network_master():
+		#rpc("exchange_items", cur_item, null)
 		$Camera2D.current = true
 	
 func _physics_process(delta):
@@ -54,7 +60,7 @@ func _physics_process(delta):
 			velocity = lerp(velocity, dir_input.normalized() * MAX_SPEED, ACCEL * delta)
 		else:
 			$AnimationPlayer.play("PlayerIdle")
-			velocity = lerp(velocity, Vector2.ZERO, ACCEL * delta)
+			velocity = lerp(velocity, Vector2.ZERO, ACCEL * delta * 2.0)
 		
 		#$Body.rotation += PI/2
 		#$Feet.rotation = atan2(dir_input.y, dir_input.x)
@@ -66,6 +72,15 @@ func _physics_process(delta):
 		rset_unreliable("puppet_rotation", rotation)
 		rset_unreliable("puppet_velocity", velocity)
 		
+		cur_item_to_pickup = null
+		for item in $ItemDetection.get_overlapping_areas():
+			if item.is_in_group("item"):
+				cur_item_to_pickup = item
+
+		if Input.is_action_just_pressed("interact"):
+			rpc("exchange_items", cur_item, cur_item_to_pickup)
+		
+		use_item()
 	else:
 		rotation = lerp_angle(rotation, puppet_rotation, delta * 8)
 		
@@ -77,9 +92,55 @@ func _physics_process(delta):
 		else:
 			$AnimationPlayer.play("PlayerIdle")
 	
-	print(username)
-	$Position2D/Username.text = Network.username
+	$Position2D/Username.text = username
 	$Position2D.global_rotation = 0
+	
+remotesync func exchange_items(_cur_item, _next_item):
+	if _cur_item:
+		remove_item()
+	if _next_item:
+		add_item(_next_item.item_name)
+		_next_item.queue_free()
+		#cur_item_to_pickup = null
+	else:
+		add_item("fists")
+	
+func use_item():
+	if !cur_item:
+		return
+	if Global.held_items[cur_item_held_name]["type"] == "gun":
+		if cur_item.automatic:
+			if Input.is_action_pressed("attack"):
+				cur_item.shoot(0, rotation, "Bullet")
+		else:
+			if Input.is_action_just_pressed("attack"):
+				cur_item.shoot(0, rotation, "Bullet")
+		if Input.is_action_just_pressed("reload"):
+			cur_item.reload()
+	elif Global.held_items[cur_item_held_name]["type"] == "melee":
+		if cur_item.automatic:
+			if Input.is_action_pressed("attack"):
+				cur_item.attack()
+		else:
+			if Input.is_action_just_pressed("attack"):
+				cur_item.attack()
+				
+func add_item(_name):
+	cur_item_held_name = _name.to_lower()
+	cur_item = Global.held_items[cur_item_held_name]["scene"].instance()
+	add_child(cur_item)
+	cur_item.position = Global.held_items[cur_item_held_name]["hold_position"]
+	
+func remove_item():
+	if Global.held_items[cur_item_held_name]["drop"]:
+		var dropped_item = Global.DROPPED_ITEM.instance()
+		dropped_item.item_name = cur_item_held_name
+		dropped_item.assign_sprite()
+		get_tree().get_current_scene().add_child(dropped_item)
+		dropped_item.global_position = global_position
+	cur_item.queue_free()
+	cur_item = null
+	cur_item_held_name = ""
 	
 func puppet_position_set(new_value) -> void:
 	puppet_position = new_value

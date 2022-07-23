@@ -1,0 +1,45 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://HeldItems/Weapons/Gun.gd" type="Script" id=1]
+[ext_resource path="res://Assets/PewpiHeld.png" type="Texture" id=2]
+[ext_resource path="res://Assets/ShadowSprite.gd" type="Script" id=3]
+
+[sub_resource type="Animation" id=3]
+resource_name = "EndReloading"
+length = 0.2
+
+[sub_resource type="Animation" id=2]
+resource_name = "Reloading"
+length = 0.2
+step = 0.05
+
+[sub_resource type="Animation" id=1]
+resource_name = "Shooting"
+length = 0.12
+step = 0.03
+
+[node name="Gun" type="Node2D"]
+z_index = -1
+script = ExtResource( 1 )
+automatic = false
+fire_rate = 0.1
+magazine_size = 12
+reload_time = 2.5
+damage = 18
+bullet_speed = 20
+shoot_pos_path = NodePath("Position2D")
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 66, -1 )
+rotation = 1.5708
+texture = ExtResource( 2 )
+script = ExtResource( 3 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+method_call_mode = 1
+anims/EndReloading = SubResource( 3 )
+anims/Reloading = SubResource( 2 )
+anims/Shooting = SubResource( 1 )
+
+[node name="Position2D" type="Position2D" parent="."]
+position = Vector2( 127, -1 )

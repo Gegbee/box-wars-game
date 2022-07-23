@@ -1,6 +1,6 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=8 format=2]
 
-[ext_resource path="res://HeldItems/Weapons/Melee/Melee.gd" type="Script" id=1]
+[ext_resource path="res://HeldItems/Weapons/Melee/Fists.gd" type="Script" id=1]
 [ext_resource path="res://HeldItems/Weapons/Melee/Fist.png" type="Texture" id=2]
 [ext_resource path="res://Assets/ShadowSprite.gd" type="Script" id=3]
 
@@ -20,13 +20,71 @@ tracks/0/keys = {
 "values": [ Vector2( 12, -7 ), Vector2( 18, -7 ), Vector2( 12, -7 ) ]
 }
 
+[sub_resource type="Animation" id=3]
+resource_name = "Attack1"
+length = 0.3
+step = 0.025
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.025, 0.075, 0.3 ),
+"transitions": PoolRealArray( 1, 0.840896, 0.840896, 1 ),
+"update": 0,
+"values": [ Vector2( 12, -7 ), Vector2( 17, -7 ), Vector2( 19, -4 ), Vector2( 12, -7 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.075, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ 90.0002, 120.3, 90.0 ]
+}
+
+[sub_resource type="Animation" id=4]
+resource_name = "Attack2"
+length = 0.3
+step = 0.025
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite2:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.025, 0.075, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 12, 7 ), Vector2( 16, 7 ), Vector2( 19, 4 ), Vector2( 12, 7 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite2:rotation_degrees")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.075, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ 90.0002, 60.0, 90.0002 ]
+}
+
 [sub_resource type="Animation" id=2]
 resource_name = "Idle"
 
 [node name="Melee" type="Node2D"]
 script = ExtResource( 1 )
-melee_damage = 20
-melee_speed = 0.4
+melee_distance = 25
+melee_speed = 0.3
 
 [node name="RayCast2D" type="RayCast2D" parent="."]
 enabled = true
@@ -37,6 +95,8 @@ one_shot = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/Attack = SubResource( 1 )
+anims/Attack1 = SubResource( 3 )
+anims/Attack2 = SubResource( 4 )
 anims/Idle = SubResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
@@ -53,5 +113,3 @@ scale = Vector2( 0.1, 0.1 )
 texture = ExtResource( 2 )
 flip_h = true
 script = ExtResource( 3 )
-
-[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]

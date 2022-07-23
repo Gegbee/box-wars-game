@@ -9,12 +9,18 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Node2D",
+"class": "Melee",
+"language": "GDScript",
+"path": "res://HeldItems/Weapons/Melee/Melee.gd"
+}, {
 "base": "Sprite",
 "class": "ShadowSprite",
 "language": "GDScript",
 "path": "res://Assets/ShadowSprite.gd"
 } ]
 _global_script_class_icons={
+"Melee": "",
 "ShadowSprite": ""
 }
 

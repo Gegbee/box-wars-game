@@ -21,7 +21,7 @@ var impulse_vector : Vector2 = Vector2()
 var impulse_strength : float = 0.0
 
 func _ready():
-	add_item("fists")
+	exchange_items()
 	
 func _physics_process(delta):
 	impulse_vector.x = lerp(impulse_vector.x, 0, 5.0 * delta)
@@ -56,16 +56,20 @@ func _physics_process(delta):
 			cur_item_to_pickup = item
 
 	if Input.is_action_just_pressed("interact"):
-		if cur_item:
-			remove_item()
-		if cur_item_to_pickup:
-			add_item(cur_item_to_pickup.item_name)
-			cur_item_to_pickup.queue_free()
-			cur_item_to_pickup = null
-		else:
-			add_item("fists")
-			
+		exchange_items()
+		
 	use_item()
+	$UsernameLabel.global_rotation = 0
+	
+func exchange_items():
+	if cur_item:
+		remove_item()
+	if cur_item_to_pickup:
+		add_item(cur_item_to_pickup.item_name)
+		cur_item_to_pickup.queue_free()
+		cur_item_to_pickup = null
+	else:
+		add_item("fists")
 	
 func use_item():
 	if !cur_item:
