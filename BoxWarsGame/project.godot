@@ -9,7 +9,17 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "Node2D",
+"base": "Area2D",
+"class": "DroppedItem",
+"language": "GDScript",
+"path": "res://DroppedItems/DroppedItem.gd"
+}, {
+"base": "Node",
+"class": "HeldItem",
+"language": "GDScript",
+"path": "res://HeldItems/HeldItem.gd"
+}, {
+"base": "HeldItem",
 "class": "Melee",
 "language": "GDScript",
 "path": "res://HeldItems/Weapons/Melee/Melee.gd"
@@ -20,6 +30,8 @@ _global_script_classes=[ {
 "path": "res://Assets/ShadowSprite.gd"
 } ]
 _global_script_class_icons={
+"DroppedItem": "",
+"HeldItem": "",
 "Melee": "",
 "ShadowSprite": ""
 }

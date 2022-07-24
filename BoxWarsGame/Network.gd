@@ -75,12 +75,13 @@ func _connected_to_server():
 	instance_player(get_tree().get_network_unique_id(), username)
 	get_tree().change_scene("res://Online/Online.tscn")
 	
+	
 func _server_disconnected():
 	print("disconnected")
 	for child in Objects.get_children():
 		child.queue_free()
 	client.close_connection()
-	get_tree().change_scene("res://Offline/Menu.tscn")
+	get_tree().change_scene("res://Offline/Offline.tscn")
 
 
 remotesync func create_player_on_all_clients(id, _username):

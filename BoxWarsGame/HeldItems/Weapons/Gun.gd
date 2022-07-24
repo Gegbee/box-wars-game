@@ -1,4 +1,4 @@
-extends Node2D
+extends HeldItem
 
 export (bool) var automatic = true
 export (float) var fire_rate = 0.5
@@ -69,29 +69,29 @@ func reload():
 	#	player_ui.reload_ammo(reload_time)
 		reload_timer.start(reload_time)
 	
-func shoot(id : int, player_rotation : float, _name : String):
-	if can_fire and current_magazine > 0:
-		$AnimationPlayer.play("Shooting")
-		current_downtime = 0
-		can_fire = false
-		shot_timer.start(fire_rate)
-		update_magazine(current_magazine - 1)
-		for shot in bullet_per_shot:
-			var bullet_instance = BULLET.instance()
-			#bullet_instance.damage = damage
-			#bullet_instance.speed = bullet_speed
-			var absolute_rotation = player_rotation + (rand_range(-current_accuracy, current_accuracy) / 100 * PI)
-			var bullet_direction = Vector2(cos(absolute_rotation),sin(absolute_rotation))
-			#bullet_instance.direction = bullet_direction
-			if shoot_pos:
-				bullet_instance.global_position = shoot_pos.global_position
-			else:
-				bullet_instance.global_position = global_position
-			bullet_instance.name = _name
-			get_tree().get_current_scene().add_child(bullet_instance)
-			bullet_instance.initialize(bullet_speed * 100, bullet_direction, damage)
-			
-		current_accuracy += accuracy_decrease
+remotesync func shoot(id : int, player_rotation : float, _name : String):
+	$AnimationPlayer.play("Shooting")
+	pass
+#	current_downtime = 0
+#	can_fire = false
+#	shot_timer.start(fire_rate)
+#	update_magazine(current_magazine - 1)
+#	for shot in bullet_per_shot:
+#		var bullet_instance = BULLET.instance()
+#		#bullet_instance.damage = damage
+#		#bullet_instance.speed = bullet_speed
+#		var absolute_rotation = player_rotation + (rand_range(-current_accuracy, current_accuracy) / 100 * PI)
+#		var bullet_direction = Vector2(cos(absolute_rotation),sin(absolute_rotation))
+#		#bullet_instance.direction = bullet_direction
+#		if shoot_pos:
+#			bullet_instance.global_position = shoot_pos.global_position
+#		else:
+#			bullet_instance.global_position = global_position
+#		bullet_instance.name = _name
+#		get_tree().get_current_scene().add_child(bullet_instance)
+#		bullet_instance.initialize(bullet_speed * 100, bullet_direction, damage)
+		
+	current_accuracy += accuracy_decrease
 
 func _on_ReloadTimer_timeout():
 	update_magazine(magazine_size)

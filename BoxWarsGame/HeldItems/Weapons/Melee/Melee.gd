@@ -1,4 +1,4 @@
-extends Node2D
+extends HeldItem
 
 class_name Melee
 
@@ -20,14 +20,14 @@ func _process(delta):
 	pass
 	#$RayCast2D.cast_to = melee_dir.normalized() * melee_distance
 	
-func attack():
+remotesync func attack():
 	if $Timer.time_left > 0:
 		return
 	attack_animation()
 	$RayCast2D.force_raycast_update()
 	if $RayCast2D.is_colliding():
 		var collider = $RayCast2D.get_collider()
-		if collider.is_in_group('eplayer'):
+		if collider.is_in_group('player'):
 			collider.damage(melee_damage)
 	$Timer.start(melee_speed)
 

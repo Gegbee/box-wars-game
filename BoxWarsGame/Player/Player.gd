@@ -33,10 +33,11 @@ func _ready():
 	
 	yield(get_tree(), "idle_frame")
 	
-	exchange_items(cur_item, null)
 	if is_network_master():
+		exchange_items(cur_item, null)
 		#rpc("exchange_items", cur_item, null)
 		$Camera2D.current = true
+		get_tree().connect("network_peer_connected", self,"_network_peer_connected")
 	
 func _physics_process(delta):
 	if is_network_master():
@@ -78,7 +79,7 @@ func _physics_process(delta):
 				cur_item_to_pickup = item
 
 		if Input.is_action_just_pressed("interact"):
-			rpc("exchange_items", cur_item, cur_item_to_pickup)
+			exchange_items(cur_item, cur_item_to_pickup)
 		
 		use_item()
 	else:
@@ -95,26 +96,26 @@ func _physics_process(delta):
 	$Position2D/Username.text = username
 	$Position2D.global_rotation = 0
 	
-remotesync func exchange_items(_cur_item, _next_item):
+func exchange_items(_cur_item, _next_item):
 	if _cur_item:
-		remove_item()
+		rpc("remove_item")
 	if _next_item:
-		add_item(_next_item.item_name)
-		_next_item.queue_free()
+		rpc("add_item", _next_item.item_name)
+		_next_item.rpc("destroy_on_all_clients")
 		#cur_item_to_pickup = null
 	else:
-		add_item("fists")
+		rpc("add_item", "fists")
 	
 func use_item():
 	if !cur_item:
 		return
 	if Global.held_items[cur_item_held_name]["type"] == "gun":
 		if cur_item.automatic:
-			if Input.is_action_pressed("attack"):
-				cur_item.shoot(0, rotation, "Bullet")
+			if cur_item.can_fire and cur_item.current_magazine > 0 and Input.is_action_pressed("attack"):
+				cur_item.rpc("shoot", 0, rotation, "Bullet")
 		else:
-			if Input.is_action_just_pressed("attack"):
-				cur_item.shoot(0, rotation, "Bullet")
+			if cur_item.can_fire and cur_item.current_magazine > 0 and Input.is_action_just_pressed("attack"):
+				cur_item.rpc("shoot", 0, rotation, "Bullet")
 		if Input.is_action_just_pressed("reload"):
 			cur_item.reload()
 	elif Global.held_items[cur_item_held_name]["type"] == "melee":
@@ -125,19 +126,25 @@ func use_item():
 			if Input.is_action_just_pressed("attack"):
 				cur_item.attack()
 				
-func add_item(_name):
-	cur_item_held_name = _name.to_lower()
+remotesync func add_item(_item_name):
+	cur_item_held_name = _item_name.to_lower()
+	
 	cur_item = Global.held_items[cur_item_held_name]["scene"].instance()
+	cur_item.name = "HeldItem" + str(int(name)) + str(Global.node_name_index)
+	Global.node_name_index += 1
 	add_child(cur_item)
 	cur_item.position = Global.held_items[cur_item_held_name]["hold_position"]
 	
-func remove_item():
+remotesync func remove_item():
 	if Global.held_items[cur_item_held_name]["drop"]:
-		var dropped_item = Global.DROPPED_ITEM.instance()
-		dropped_item.item_name = cur_item_held_name
-		dropped_item.assign_sprite()
-		get_tree().get_current_scene().add_child(dropped_item)
-		dropped_item.global_position = global_position
+#		var dropped_item = Global.DROPPED_ITEM.instance()
+#		dropped_item.item_name = cur_item_held_name
+#		dropped_item.assign_sprite()
+#		get_tree().get_current_scene().add_child(dropped_item)
+#		dropped_item.global_position = global_position
+		Global.spawn_item("Item" + str(int(name)) + str(Global.node_name_index), cur_item_held_name, global_position)
+		#Global.rpc("spawn_item_on_all_clients", "Item" + str(int(name)) + str(Global.node_name_index), cur_item_held_name, global_position)
+		Global.node_name_index += 1
 	cur_item.queue_free()
 	cur_item = null
 	cur_item_held_name = ""
@@ -179,3 +186,6 @@ func impulse(dir : Vector2, strength: float):
 	impulse_strength = strength
 	impulse_vector = dir * strength / knockback_resistance
 
+func _network_peer_connected(id):
+	if cur_item:
+		rpc_id(id, "add_item", cur_item_held_name)
