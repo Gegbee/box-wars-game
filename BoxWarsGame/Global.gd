@@ -9,7 +9,9 @@ var node_name_index : int = 0
 var held_items : Dictionary = {
 	"flag" : {
 		"type" : "hold/drop",
-		"hold_position" : Vector2()
+		"scene" : preload("res://HeldItems/Flag/FlagHeldItem.tscn"),
+		"hold_position" : Vector2(150, 0),
+		"drop" : true
 	},
 	"pewpi" : {
 		"type" : "gun",
@@ -32,7 +34,12 @@ var held_items : Dictionary = {
 }
 var dropped_items : Dictionary = {
 	"pewpi" : {
+		"scene" : DROPPED_ITEM,
 		"sprite" : preload("res://Assets/PewpiDropped.png")
+	},
+	"flag" : {
+		"scene" : preload("res://DroppedItems/Flag/FlagDroppedItem.tscn"),
+		"sprite" : preload("res://Assets/Chair.png")
 	}
 }
 
@@ -47,11 +54,11 @@ remotesync func spawn_item_on_all_clients(_name : String, item_name : String, po
 	spawn_item(_name, item_name, pos)
 
 remote func spawn_item(_name : String, item_name : String, pos : Vector2):
-	var instance : DroppedItem = DROPPED_ITEM.instance()
+	var instance : DroppedItem = dropped_items[item_name]["scene"].instance()
 	instance.name = _name
 	instance.item_name = item_name.to_lower()
 	instance.position = pos
-	instance.assign_sprite()
+	#instance.assign_sprite()
 	Objects.add_child(instance)
 	
 #remote func destroy_item_on_all_clients(node):
@@ -63,3 +70,8 @@ remote func spawn_item(_name : String, item_name : String, pos : Vector2):
 	
 #remotesync func destroy_instance_on_all_clients(instance):
 #	instance.queue_free()
+
+func gen_unique_node_name(node_name : String, parent_id : int):
+	var new_name = node_name + str(parent_id) + str(node_name_index)
+	node_name_index += 1
+	return new_name
