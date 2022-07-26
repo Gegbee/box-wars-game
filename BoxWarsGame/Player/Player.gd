@@ -171,7 +171,9 @@ func kys():
 	emit_signal("OnEntityDead")
 	if is_network_master():
 		Global.respawn_button.show()
-	queue_free()
+	disable()
+#	yield(get_tree().create_timer(1), "timeout")
+#	queue_free()
 
 #func impulse(dir : Vector2, strength: float):
 #	impulse_strength = strength
@@ -180,3 +182,19 @@ func kys():
 func _network_peer_connected(id):
 	if held_item:
 		rpc_id(id, "add_held_item", held_item.item_name, held_item.name)
+
+remotesync func enable(spawn_position : Vector2):
+	global_position = spawn_position
+	set_process(true)
+	set_physics_process(true)
+	health = MAX_HEALTH
+	visible = true
+	$CollisionShape2D.disabled = false
+	if is_network_master():
+		exchange_items(held_item, null)
+	
+func disable():
+	set_process(false)
+	set_physics_process(false)
+	visible = false
+	$CollisionShape2D.disabled = true

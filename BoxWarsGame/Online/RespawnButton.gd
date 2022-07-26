@@ -5,5 +5,6 @@ func _ready():
 	$CenterContainer/Button.hide()
 
 func _on_Button_pressed():
-	Network.rpc("create_player_on_all_clients", get_tree().get_network_unique_id(), Network.username)
+	Global.controlled_player.rpc("enable", Vector2())
+	#Network.rpc("create_player_on_all_clients", get_tree().get_network_unique_id(), Network.username)
 	$CenterContainer/Button.hide()
