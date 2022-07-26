@@ -31,6 +31,8 @@ func _ready():
 	add_to_group("player")
 	
 	yield(get_tree(), "idle_frame")
+	if health_bar_path:
+		health_bar = get_node(health_bar_path)
 	
 	if is_network_master():
 		exchange_items(held_item, null)
@@ -101,25 +103,26 @@ func exchange_items(_held_item, _next_item):
 		_next_item.rpc("destroy_on_all_clients")
 	else:
 		rpc("add_held_item", "fists", Global.gen_unique_node_name("HeldItem", int(name)))
+		
 func use_held_item():
 	if !held_item:
 		return
-#	if Global.held_items[held_item.item_name]["type"] == "gun":
-#		if held_item.automatic:
-#			if held_item.can_fire and held_item.current_magazine > 0 and Input.is_action_pressed("attack"):
-#				held_item.rpc("shoot", 0, rotation, "Bullet")
-#		else:
-#			if held_item.can_fire and held_item.current_magazine > 0 and Input.is_action_just_pressed("attack"):
-#				held_item.rpc("shoot", 0, rotation, "Bullet")
-#		if Input.is_action_just_pressed("reload"):
-#			held_item.reload()
-#	elif Global.held_items[held_item.item_name]["type"] == "melee":
-#		if held_item.automatic:
-#			if Input.is_action_pressed("attack"):
-#				held_item.attack()
-#		else:
-#			if Input.is_action_just_pressed("attack"):
-#				held_item.attack()
+	if Global.held_items[held_item.item_name]["type"] == "gun":
+		if held_item.automatic:
+			if held_item.can_fire and held_item.current_magazine > 0 and Input.is_action_pressed("attack"):
+				held_item.rpc("shoot", 0, rotation, "Bullet")
+		else:
+			if held_item.can_fire and held_item.current_magazine > 0 and Input.is_action_just_pressed("attack"):
+				held_item.rpc("shoot", 0, rotation, "Bullet")
+		if Input.is_action_just_pressed("reload"):
+			held_item.reload()
+	elif Global.held_items[held_item.item_name]["type"] == "melee":
+		if held_item.automatic:
+			if Input.is_action_pressed("attack"):
+				held_item.rpc("attack")
+		else:
+			if Input.is_action_just_pressed("attack"):
+				held_item.rpc("attack")
 				
 remotesync func add_held_item(_item_name, _new_name : String):
 	held_item = Global.held_items[_item_name.to_lower()]["scene"].instance()
@@ -144,18 +147,19 @@ func puppet_velocity_set(new_value):
 	puppet_velocity = new_value
 	velocity = puppet_velocity
 	
-func damage(dmg : int, impulse_dir : Vector2 = Vector2(), strength : float = 0):
+remotesync func damage(dmg : int, impulse_dir : Vector2 = Vector2(), strength : float = 0):
 	set_health(health - dmg)
 	#impulse(impulse_dir.normalized(), strength)
-	print(self.name + " health: " + str(health) + " / " + str(MAX_HEALTH))
+	if is_network_master():
+		print(self.name + " health: " + str(health) + " / " + str(MAX_HEALTH))
 	
 func set_health(new_health : int):
 	if invincible:
 		return
 	if new_health <= 0: #and health > 0:
-		rpc("kys")
+		kys()
 	health = new_health
-	rset("puppet_health", health)
+	#rset("puppet_health", health)
 	if health_bar:
 		health_bar.updateHealth(health)
 
@@ -163,8 +167,10 @@ func puppet_health_set(new_value):
 	puppet_health = new_value
 	health = puppet_health
 	
-remotesync func kys():
+func kys():
 	emit_signal("OnEntityDead")
+	if is_network_master():
+		Global.respawn_button.show()
 	queue_free()
 
 #func impulse(dir : Vector2, strength: float):
@@ -173,4 +179,4 @@ remotesync func kys():
 
 func _network_peer_connected(id):
 	if held_item:
-		rpc_id(id, "add_held_item", held_item.item_name, Global.gen_unique_node_name("HeldItem", int(name)))
+		rpc_id(id, "add_held_item", held_item.item_name, held_item.name)

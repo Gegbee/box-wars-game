@@ -67,10 +67,10 @@ anims/PlayerWalking = ExtResource( 6 )
 [node name="Position2D" type="Position2D" parent="."]
 
 [node name="HealthBar" parent="Position2D" instance=ExtResource( 10 )]
-margin_left = -70.0
-margin_top = -212.0
-margin_right = 71.0
-margin_bottom = -173.0
+margin_left = -72.0
+margin_top = -232.0
+margin_right = 69.0
+margin_bottom = -193.0
 
 [node name="Username" type="Label" parent="Position2D"]
 margin_left = -83.0

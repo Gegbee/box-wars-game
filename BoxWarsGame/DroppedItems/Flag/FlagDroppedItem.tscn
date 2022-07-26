@@ -16,4 +16,4 @@ shape = SubResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="."]
 script = ExtResource( 2 )
-shadow_offset = 8.0
+shadow_offset = 16.0

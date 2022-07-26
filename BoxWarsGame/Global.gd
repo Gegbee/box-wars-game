@@ -1,6 +1,7 @@
 extends Node
 
 var controlled_player : KinematicBody2D = null
+var respawn_button : Button = null
 
 const DROPPED_ITEM = preload("res://DroppedItems/DroppedItem.tscn")
 	

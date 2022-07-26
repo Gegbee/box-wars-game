@@ -48,6 +48,9 @@ rect_scale = Vector2( 0.4, 0.4 )
 custom_colors/font_color = Color( 0, 0, 0, 0.380392 )
 custom_fonts/font = SubResource( 1 )
 text = "box wars."
+__meta__ = {
+"_edit_use_anchors_": true
+}
 
 [node name="Label" type="Label" parent="LabelFloating"]
 margin_left = -120.0
@@ -57,6 +60,9 @@ margin_bottom = 32.0
 rect_scale = Vector2( 0.4, 0.4 )
 custom_fonts/font = SubResource( 1 )
 text = "box wars."
+__meta__ = {
+"_edit_use_anchors_": true
+}
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource( 2 )
