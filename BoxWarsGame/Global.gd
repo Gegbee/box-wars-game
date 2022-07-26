@@ -1,5 +1,7 @@
 extends Node
 
+var is_headless_server = false
+
 var controlled_player : KinematicBody2D = null
 var respawn_button : Button = null
 

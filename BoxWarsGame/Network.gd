@@ -1,7 +1,7 @@
 extends Node
 
 const DEFAULT_PORT = 28960
-const MAX_CLIENTS = 10
+const MAX_CLIENTS = 4
 
 var server : NetworkedMultiplayerENet = null
 var client : NetworkedMultiplayerENet = null
@@ -10,8 +10,6 @@ var username = ""
 var ip_address = ""
 
 const PLAYER = preload("res://Player/Player.tscn")
-#const RESET_POWER = preload("res://Menu/ResetPower.tscn")
-var name_index : int = 0
 
 var upnp : UPNP = null
 var players : Dictionary = {
@@ -43,27 +41,27 @@ func _network_peer_disconnected(id):
 	remove_player(id)
 		
 func create_server():
-#	if upnp == null:
-#		upnp = UPNP.new()
-#		upnp.discover()
-#		ip_address = upnp.query_external_address()
-#	var err = upnp.add_port_mapping(DEFAULT_PORT)
-#	if err != upnp.UPNP_RESULT_SUCCESS:
-#		push_error("Unable to port forward" + str(err))
-		
+	if upnp == null:
+		upnp = UPNP.new()
+		upnp.discover()
+		ip_address = upnp.query_external_address()
+	var err = upnp.add_port_mapping(DEFAULT_PORT)
+	if err != upnp.UPNP_RESULT_SUCCESS:
+		push_error("Unable to port forward" + str(err))
+	print(ip_address)
+	
 	server = NetworkedMultiplayerENet.new()
 	server.create_server(DEFAULT_PORT, MAX_CLIENTS)
 	get_tree().set_network_peer(server)
 	print("server created")
 	# INSTANCE SERVER'S PLAYER
-	instance_player(get_tree().get_network_unique_id(), username)
+	if !Global.is_headless_server:
+		instance_player(get_tree().get_network_unique_id(), username)
 	get_tree().change_scene("res://Online/Online.tscn")
-	#instance_player(get_tree().get_network_unique_id(), username)
-#	var reset_power = Global.instance_node(RESET_POWER, Objects)
-#	reset_power.set_network_master(get_tree().get_network_unique_id())
 		
 func join_server():
 	client = NetworkedMultiplayerENet.new()
+	print(ip_address)
 	client.create_client(ip_address, DEFAULT_PORT)
 	get_tree().set_network_peer(client)
 	print("client created")
@@ -88,8 +86,6 @@ remotesync func create_player_on_all_clients(id, _username):
 	if Objects.has_node(str(id)):
 		return
 	var player_instance = instance_player(id, _username)
-		#players[id] = _username
-	#return player_instance
 
 remote func instance_player(id, _username):
 	var player_instance = PLAYER.instance()
@@ -114,3 +110,8 @@ func remove_player(id):
 		
 remotesync func remove_player_on_all_clients(id):
 	remove_player(id)
+
+func _exit_tree():
+	if upnp:
+		upnp.delete_port_mapping(DEFAULT_PORT)
+	print("exited game")

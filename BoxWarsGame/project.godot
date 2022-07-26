@@ -48,12 +48,20 @@ Network="*res://Network.gd"
 Objects="*res://Objects.tscn"
 Global="*res://Global.gd"
 
+[deploy]
+
+netlify/subdomain="heartfelt-jelly-743bac.netlify.app"
+
 [display]
 
 window/size/width=873
 window/size/height=491
 window/stretch/mode="2d"
 window/stretch/aspect="keep"
+
+[editor_plugins]
+
+enabled=PoolStringArray( "res://addons/automatic_deploy/plugin.cfg" )
 
 [input]
 
