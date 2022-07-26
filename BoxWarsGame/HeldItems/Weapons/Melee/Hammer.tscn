@@ -1,0 +1,48 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://HeldItems/Weapons/Melee/Melee.gd" type="Script" id=1]
+[ext_resource path="res://Assets/BrocksHammer.png" type="Texture" id=2]
+[ext_resource path="res://Assets/ShadowSprite.gd" type="Script" id=3]
+
+[sub_resource type="Animation" id=1]
+resource_name = "Attack"
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.3, 1 ),
+"transitions": PoolRealArray( 2.21914, 0.517632, 0.307786, 1 ),
+"update": 0,
+"values": [ -60.0, 60.0, 70.0, -60.0 ]
+}
+
+[node name="Hammer" type="Node2D"]
+z_index = -1
+script = ExtResource( 1 )
+melee_distance = 180
+melee_damage = 40
+melee_speed = 1.5
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+enabled = true
+cast_to = Vector2( 180, 0 )
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/Attack = SubResource( 1 )
+
+[node name="Sprite" type="Node2D" parent="."]
+rotation = -1.0472
+
+[node name="Sprite" type="Sprite" parent="Sprite"]
+position = Vector2( 68, 2 )
+rotation = 1.5708
+texture = ExtResource( 2 )
+script = ExtResource( 3 )
+shadow_offset = 15.0

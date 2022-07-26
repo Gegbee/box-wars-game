@@ -16,7 +16,6 @@ func assign_sprite():
 	$Sprite.texture = Global.dropped_items[item_name]["sprite"]
 
 remotesync func destroy_on_all_clients():
-	print("yes destroying on this client")
 	queue_free()
 
 func _network_peer_connected(id):

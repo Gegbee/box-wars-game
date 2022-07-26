@@ -99,6 +99,7 @@ remote func instance_player(id, _username):
 	Objects.add_child(player_instance)
 	player_instance.username = _username
 	if get_tree().get_network_unique_id() == id:
+		print("Controlled player set to: ", str(id))
 		Global.controlled_player = player_instance
 	return player_instance
 

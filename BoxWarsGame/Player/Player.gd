@@ -119,10 +119,12 @@ func use_held_item():
 	elif Global.held_items[held_item.item_name]["type"] == "melee":
 		if held_item.automatic:
 			if Input.is_action_pressed("attack"):
-				held_item.rpc("attack")
+				#held_item.rpc("attack")
+				held_item.attack()
 		else:
 			if Input.is_action_just_pressed("attack"):
-				held_item.rpc("attack")
+				#held_item.rpc("attack")
+				held_item.attack()
 				
 remotesync func add_held_item(_item_name, _new_name : String):
 	held_item = Global.held_items[_item_name.to_lower()]["scene"].instance()
@@ -187,7 +189,7 @@ remotesync func enable(spawn_position : Vector2):
 	global_position = spawn_position
 	set_process(true)
 	set_physics_process(true)
-	health = MAX_HEALTH
+	set_health(MAX_HEALTH)
 	visible = true
 	$CollisionShape2D.disabled = false
 	if is_network_master():
@@ -198,3 +200,5 @@ func disable():
 	set_physics_process(false)
 	visible = false
 	$CollisionShape2D.disabled = true
+	if is_network_master() and held_item:
+		exchange_items(held_item, null)

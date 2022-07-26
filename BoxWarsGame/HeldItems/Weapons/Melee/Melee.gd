@@ -20,23 +20,24 @@ func _process(delta):
 	pass
 	#$RayCast2D.cast_to = melee_dir.normalized() * melee_distance
 	
-remotesync func attack():
+func attack():
 	if $Timer.time_left > 0:
 		return
-	attack_animation()
+	rpc("attack_animation")
 	# you can rather check if is_network_master here or you can just call damage without an RPC call. 
 	# Each method has its advantages and MUST be explored later.
-	if is_network_master():
-		$RayCast2D.force_raycast_update()
-		if $RayCast2D.is_colliding():
-			var collider = $RayCast2D.get_collider()
-			if collider.is_in_group('player'):
-				collider.rpc("damage", melee_damage)
-		$Timer.start(melee_speed)
+#	if is_network_master():
+	$RayCast2D.force_raycast_update()
+	if $RayCast2D.is_colliding():
+		var collider = $RayCast2D.get_collider()
+		if collider.is_in_group('player'):
+			collider.rpc("damage", melee_damage)
+			#collider.damage(melee_damage)
+	$Timer.start(melee_speed)
 
 #func _on_AnimationPlayer_animation_finished(anim_name):
 #	if anim_name == "Attack":
 #		$AnimationPlayer.play("Idle")
 
-func attack_animation():
+remotesync func attack_animation():
 	$AnimationPlayer.play("Attack")

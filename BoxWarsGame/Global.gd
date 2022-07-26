@@ -26,6 +26,12 @@ var held_items : Dictionary = {
 		"hold_position" : Vector2(),
 		"drop" : false
 	},
+	"hammer" : {
+		"type" : "melee",
+		"scene" : preload("res://HeldItems/Weapons/Melee/Hammer.tscn"),
+		"hold_position" : Vector2(),
+		"drop" : true
+	},
 	"template" : {
 		"type" : "melee/gun/hold/drop",
 		"scene" : "PackedScene",
@@ -41,6 +47,10 @@ var dropped_items : Dictionary = {
 	"flag" : {
 		"scene" : preload("res://DroppedItems/Flag/FlagDroppedItem.tscn"),
 		"sprite" : preload("res://Assets/Chair.png")
+	},
+	"hammer" : {
+		"scene" : DROPPED_ITEM,
+		"sprite" : preload("res://Assets/BrocksHammer.png")
 	}
 }
 
