@@ -14,7 +14,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://DroppedItems/DroppedItem.gd"
 }, {
-"base": "Node",
+"base": "Node2D",
 "class": "HeldItem",
 "language": "GDScript",
 "path": "res://HeldItems/HeldItem.gd"

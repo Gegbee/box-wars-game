@@ -20,8 +20,6 @@ export (float) var accuracy_increase_delay = 0.2
 # procedural shotguns?????? This var might not work with current collision layers because bullets probably collide with themselves.
 export (int, 1, 10) var bullet_per_shot = 1
 
-const BULLET = preload("res://HeldItems/Weapons/Bullet/Bullet.tscn")
-
 var can_fire := true
 var current_magazine : int
 var current_accuracy : float
@@ -49,7 +47,8 @@ func _ready():
 	if shoot_pos_path:
 		shoot_pos = get_node(shoot_pos_path)
 	#randomize()
-	current_magazine = magazine_size
+	current_magazine = 0
+	reload()
 	current_accuracy = min_accuracy
 #	player_ui.add_gun(magazine_size)
 	#reload()
@@ -62,34 +61,34 @@ func _process(delta):
 		current_accuracy = current_accuracy + -accuracy_increase * current_downtime
 	current_accuracy = clamp(current_accuracy, min_accuracy, max_accuracy)
 
-func reload():
+remotesync func reload():
 	if reload_timer.is_stopped():
 		$AnimationPlayer.play("Reloading")
 		can_fire = false
 	#	player_ui.reload_ammo(reload_time)
 		reload_timer.start(reload_time)
 	
-remotesync func shoot(id : int, player_rotation : float, _name : String):
+remotesync func shoot(player_rotation : float, _name : String, _rand : float):
 	$AnimationPlayer.play("Shooting")
 	pass
-#	current_downtime = 0
-#	can_fire = false
-#	shot_timer.start(fire_rate)
-#	update_magazine(current_magazine - 1)
-#	for shot in bullet_per_shot:
-#		var bullet_instance = BULLET.instance()
-#		#bullet_instance.damage = damage
-#		#bullet_instance.speed = bullet_speed
-#		var absolute_rotation = player_rotation + (rand_range(-current_accuracy, current_accuracy) / 100 * PI)
-#		var bullet_direction = Vector2(cos(absolute_rotation),sin(absolute_rotation))
-#		#bullet_instance.direction = bullet_direction
-#		if shoot_pos:
-#			bullet_instance.global_position = shoot_pos.global_position
-#		else:
-#			bullet_instance.global_position = global_position
-#		bullet_instance.name = _name
-#		get_tree().get_current_scene().add_child(bullet_instance)
-#		bullet_instance.initialize(bullet_speed * 100, bullet_direction, damage)
+	current_downtime = 0
+	can_fire = false
+	shot_timer.start(fire_rate)
+	update_magazine(current_magazine - 1)
+	for shot in bullet_per_shot:
+		var bullet_instance = Global.BULLET.instance()
+		#bullet_instance.damage = damage
+		#bullet_instance.speed = bullet_speed
+		var absolute_rotation = player_rotation + (_rand * current_accuracy / 100 * PI)
+		var bullet_direction = Vector2(cos(absolute_rotation),sin(absolute_rotation))
+		#bullet_instance.direction = bullet_direction
+		if shoot_pos:
+			bullet_instance.global_position = shoot_pos.global_position
+		else:
+			bullet_instance.global_position = global_position
+		bullet_instance.name = _name
+		Objects.add_child(bullet_instance)
+		bullet_instance.initialize(bullet_speed * 100, bullet_direction, damage)
 		
 	current_accuracy += accuracy_decrease
 

@@ -15,10 +15,7 @@ func _ready():
 	$RayCast2D.cast_to = Vector2(melee_distance, 0)
 	$RayCast2D.add_exception(get_parent())
 	#$AnimationPlayer.connect("animation_finished", self, "_on_AnimationPlayer_animation_finished")
-	
-func _process(delta):
-	pass
-	#$RayCast2D.cast_to = melee_dir.normalized() * melee_distance
+	$Timer.start(melee_speed)
 	
 func attack():
 	if $Timer.time_left > 0:

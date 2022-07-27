@@ -7,7 +7,8 @@ var respawn_button : Button = null
 var team_winner : String = 'default'
 
 const DROPPED_ITEM = preload("res://DroppedItems/DroppedItem.tscn")
-	
+const BULLET = preload("res://HeldItems/Weapons/Bullet/Bullet.tscn")
+
 var node_name_index : int = 0
 
 var held_items : Dictionary = {
@@ -35,6 +36,12 @@ var held_items : Dictionary = {
 		"hold_position" : Vector2(),
 		"drop" : true
 	},
+	"katana" : {
+		"type" : "melee",
+		"scene" : preload("res://HeldItems/Weapons/Melee/Katana.tscn"),
+		"hold_position" : Vector2(),
+		"drop" : true
+	},
 	"template" : {
 		"type" : "melee/gun/hold/drop",
 		"scene" : "PackedScene",
@@ -54,6 +61,10 @@ var dropped_items : Dictionary = {
 	"hammer" : {
 		"scene" : DROPPED_ITEM,
 		"sprite" : preload("res://Assets/BrocksHammer.png")
+	},
+	"katana" : {
+		"scene" : DROPPED_ITEM,
+		"sprite" : preload("res://Assets/Katana.png")
 	}
 }
 

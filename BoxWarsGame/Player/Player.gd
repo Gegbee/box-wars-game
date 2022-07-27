@@ -118,12 +118,12 @@ func use_held_item():
 	if Global.held_items[held_item.item_name]["type"] == "gun":
 		if held_item.automatic:
 			if held_item.can_fire and held_item.current_magazine > 0 and Input.is_action_pressed("attack"):
-				held_item.rpc("shoot", 0, rotation, "Bullet")
+				held_item.rpc("shoot", rotation, Global.gen_unique_node_name("Bullet", int(name)), rand_range(-1, 1))
 		else:
 			if held_item.can_fire and held_item.current_magazine > 0 and Input.is_action_just_pressed("attack"):
-				held_item.rpc("shoot", 0, rotation, "Bullet")
+				held_item.rpc("shoot", rotation, Global.gen_unique_node_name("Bullet", int(name)), rand_range(-1, 1))
 		if Input.is_action_just_pressed("reload"):
-			held_item.reload()
+			held_item.rpc("reload")
 	elif Global.held_items[held_item.item_name]["type"] == "melee":
 		if held_item.automatic:
 			if Input.is_action_pressed("attack"):

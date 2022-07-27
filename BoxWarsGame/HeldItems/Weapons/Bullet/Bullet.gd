@@ -34,17 +34,17 @@ func _physics_process(delta):
 		
 	if get_slide_count() > 0:
 		var collision = get_slide_collision(0)
-		if collision.collider.is_in_group("entity"):
+		if collision.collider.is_in_group("player"):
 			collision.collider.damage(damage)
-		destroy()
+		rpc("destroy")
 	if (global_position - initial_position).length() > 2000:
-		destroy()
+		rpc("destroy")
 			
 func puppet_position_set(new_value):
 	puppet_position = new_value
 	global_position = puppet_position
 	
-func destroy():
+remotesync func destroy():
 	set_process(false)
 	set_physics_process(false)
 	queue_free()
