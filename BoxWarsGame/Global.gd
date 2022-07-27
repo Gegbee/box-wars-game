@@ -4,6 +4,7 @@ var is_headless_server = false
 
 var controlled_player : KinematicBody2D = null
 var respawn_button : Button = null
+var team_winner : String = 'default'
 
 const DROPPED_ITEM = preload("res://DroppedItems/DroppedItem.tscn")
 	
@@ -88,3 +89,5 @@ func gen_unique_node_name(node_name : String, parent_id : int):
 	var new_name = node_name + str(parent_id) + str(node_name_index)
 	node_name_index += 1
 	return new_name
+
+

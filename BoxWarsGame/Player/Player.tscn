@@ -12,7 +12,7 @@
 [ext_resource path="res://HealthBar/HealthBar.tscn" type="PackedScene" id=10]
 
 [sub_resource type="CircleShape2D" id=1]
-radius = 48.0
+radius = 40.0
 
 [sub_resource type="DynamicFont" id=2]
 size = 36

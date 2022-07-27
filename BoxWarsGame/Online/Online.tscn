@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Assets/Background.png" type="Texture" id=1]
 [ext_resource path="res://Online/Online.gd" type="Script" id=2]
@@ -6,6 +6,8 @@
 [ext_resource path="res://Online/Door.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Online/RespawnButton.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Assets/PrototypeCubes.png" type="Texture" id=6]
+[ext_resource path="res://Online/Zone.tscn" type="PackedScene" id=7]
+[ext_resource path="res://DroppedItems/Flag/FlagDroppedItem.tscn" type="PackedScene" id=8]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 150, 100 )
@@ -106,3 +108,10 @@ margin_right = 300.0
 margin_bottom = 200.0
 texture = ExtResource( 6 )
 stretch_mode = 2
+
+[node name="Zone" parent="." instance=ExtResource( 7 )]
+position = Vector2( -650, 321 )
+scale = Vector2( 5, 5 )
+
+[node name="DroppedItem" parent="." instance=ExtResource( 8 )]
+position = Vector2( -173, 380 )

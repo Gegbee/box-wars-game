@@ -22,3 +22,5 @@ func _network_peer_connected(id):
 #	var instance : DroppedItem = Global.DROPPED_ITEM.instance()
 #	instance.name = name
 	Global.rpc_id(id, "spawn_item", name, item_name, global_position)
+
+
