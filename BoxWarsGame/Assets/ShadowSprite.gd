@@ -13,7 +13,7 @@ func _ready():
 		shadow.texture = texture
 	shadow.modulate = "000000"
 	shadow.modulate.a = shadow_opacity
-	shadow.z_index = -12
+	shadow.z_index = z_index-1
 	
 func _process(delta):
 	if shadow.texture:

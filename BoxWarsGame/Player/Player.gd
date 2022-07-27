@@ -1,6 +1,8 @@
 extends KinematicBody2D
 
 var velocity := Vector2()
+var velocity_mult : float = 1.0
+var can_boost : bool = true
 
 const MAX_SPEED : int = 400
 const ACCEL : float = 6.0
@@ -15,7 +17,7 @@ puppet var puppet_position = Vector2() setget puppet_position_set
 # setget for puppet_velocity can be deleted later i just made this for animation testing
 puppet var puppet_velocity = Vector2() setget puppet_velocity_set
 puppet var puppet_rotation = 0.0
-  
+
 var invincible : bool = false
 export var health_bar_path : NodePath
 var health_bar = null
@@ -66,7 +68,7 @@ func _physics_process(delta):
 		
 		#velocity -= impulse_vector
 		look_at(get_global_mouse_position())
-		velocity = move_and_slide(velocity)
+		velocity = move_and_slide(velocity * velocity_mult)
 		
 		rset_unreliable("puppet_position", global_position)
 		rset_unreliable("puppet_rotation", rotation)
@@ -80,6 +82,12 @@ func _physics_process(delta):
 		if Input.is_action_just_pressed("interact"):
 			exchange_items(held_item, item_ready_to_pickup)
 		
+		velocity_mult = lerp(velocity_mult, 1.0, 40.0 * delta)
+		if Input.is_action_just_pressed("boost") and can_boost:
+			can_boost = false
+			$BoostTimer.start(3.0)
+			velocity_mult = 3.0
+			
 		use_held_item()
 	else:
 		rotation = lerp_angle(rotation, puppet_rotation, delta * 8)
@@ -202,3 +210,7 @@ func disable():
 	$CollisionShape2D.disabled = true
 	if is_network_master() and held_item:
 		exchange_items(held_item, null)
+
+
+func _on_BoostTimer_timeout():
+	can_boost = true

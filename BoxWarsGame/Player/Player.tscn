@@ -12,7 +12,7 @@
 [ext_resource path="res://HealthBar/HealthBar.tscn" type="PackedScene" id=10]
 
 [sub_resource type="CircleShape2D" id=1]
-radius = 51.0098
+radius = 48.0
 
 [sub_resource type="DynamicFont" id=2]
 size = 36
@@ -22,7 +22,6 @@ font_data = ExtResource( 7 )
 radius = 144.007
 
 [node name="Player" type="KinematicBody2D"]
-z_index = 4
 script = ExtResource( 1 )
 health_bar_path = NodePath("Position2D/HealthBar")
 
@@ -65,6 +64,7 @@ anims/PlayerShuffle = ExtResource( 5 )
 anims/PlayerWalking = ExtResource( 6 )
 
 [node name="Position2D" type="Position2D" parent="."]
+z_index = 11
 
 [node name="HealthBar" parent="Position2D" instance=ExtResource( 10 )]
 margin_left = -72.0
@@ -91,3 +91,9 @@ texture = ExtResource( 8 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ItemDetection"]
 shape = SubResource( 3 )
+
+[node name="BoostTimer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+
+[connection signal="timeout" from="BoostTimer" to="." method="_on_BoostTimer_timeout"]

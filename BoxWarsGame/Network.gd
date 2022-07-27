@@ -41,14 +41,14 @@ func _network_peer_disconnected(id):
 	remove_player(id)
 		
 func create_server():
-	if upnp == null:
-		upnp = UPNP.new()
-		upnp.discover()
-		ip_address = upnp.query_external_address()
-	var err = upnp.add_port_mapping(DEFAULT_PORT)
-	if err != upnp.UPNP_RESULT_SUCCESS:
-		push_error("Unable to port forward" + str(err))
-	print(ip_address)
+#	if upnp == null:
+#		upnp = UPNP.new()
+#		upnp.discover()
+#		ip_address = upnp.query_external_address()
+#	var err = upnp.add_port_mapping(DEFAULT_PORT)
+#	if err != upnp.UPNP_RESULT_SUCCESS:
+#		push_error("Unable to port forward" + str(err))
+#	print(ip_address)
 	
 	server = NetworkedMultiplayerENet.new()
 	server.create_server(DEFAULT_PORT, MAX_CLIENTS)
