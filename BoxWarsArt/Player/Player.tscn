@@ -40,7 +40,7 @@ rotation = 1.5708
 scale = Vector2( 0.15, 0.15 )
 texture = ExtResource( 3 )
 script = ExtResource( 4 )
-shadow_offset = 2.0
+shadow_offset = 10.0
 
 [node name="Foot2" type="Sprite" parent="Feet"]
 position = Vector2( -10, 4 )
@@ -48,7 +48,7 @@ rotation = 1.5708
 scale = Vector2( 0.15, 0.15 )
 texture = ExtResource( 3 )
 script = ExtResource( 4 )
-shadow_offset = 2.0
+shadow_offset = 10.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
@@ -59,6 +59,7 @@ scale = Vector2( 0.16, 0.16 )
 z_index = 1
 texture = ExtResource( 2 )
 script = ExtResource( 4 )
+shadow_offset = 26.0
 
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true

@@ -84,7 +84,6 @@ position = Vector2( 552, 24 )
 [node name="Cargo3" type="StaticBody2D" parent="Objects"]
 position = Vector2( -96, 744 )
 rotation = 1.20253
-scale = Vector2( 1, 1 )
 __meta__ = {
 "_edit_group_": true
 }
@@ -95,11 +94,11 @@ shape = SubResource( 2 )
 [node name="Sprite" type="Sprite" parent="Objects/Cargo3"]
 texture = ExtResource( 3 )
 script = ExtResource( 6 )
+shadow_offset = 70.0
 
 [node name="Cargo2" type="StaticBody2D" parent="Objects"]
 position = Vector2( 88, 560 )
 rotation = 1.20253
-scale = Vector2( 1, 1 )
 __meta__ = {
 "_edit_group_": true
 }
@@ -110,11 +109,11 @@ shape = SubResource( 2 )
 [node name="Sprite" type="Sprite" parent="Objects/Cargo2"]
 texture = ExtResource( 7 )
 script = ExtResource( 6 )
+shadow_offset = 70.0
 
 [node name="Cargo8" type="StaticBody2D" parent="Objects"]
 position = Vector2( 1264, 1488 )
 rotation = 2.3562
-scale = Vector2( 1, 1 )
 __meta__ = {
 "_edit_group_": true
 }
@@ -125,6 +124,7 @@ shape = SubResource( 2 )
 [node name="Sprite" type="Sprite" parent="Objects/Cargo8"]
 texture = ExtResource( 7 )
 script = ExtResource( 6 )
+shadow_offset = 70.0
 
 [node name="Cargo7" type="StaticBody2D" parent="Objects"]
 position = Vector2( 416, 1752 )
@@ -139,6 +139,7 @@ shape = SubResource( 2 )
 [node name="Sprite" type="Sprite" parent="Objects/Cargo7"]
 texture = ExtResource( 8 )
 script = ExtResource( 6 )
+shadow_offset = 70.0
 
 [node name="Cargo9" type="StaticBody2D" parent="Objects"]
 position = Vector2( -920, 296 )
@@ -153,6 +154,7 @@ shape = SubResource( 2 )
 [node name="Sprite" type="Sprite" parent="Objects/Cargo9"]
 texture = ExtResource( 3 )
 script = ExtResource( 6 )
+shadow_offset = 70.0
 
 [node name="Cargo6" type="StaticBody2D" parent="Objects"]
 position = Vector2( -768, 848 )
@@ -167,6 +169,7 @@ shape = SubResource( 2 )
 [node name="Sprite" type="Sprite" parent="Objects/Cargo6"]
 texture = ExtResource( 8 )
 script = ExtResource( 6 )
+shadow_offset = 70.0
 
 [node name="Cargo5" type="StaticBody2D" parent="Objects"]
 position = Vector2( 936, 896 )
@@ -181,6 +184,7 @@ shape = SubResource( 2 )
 [node name="Sprite" type="Sprite" parent="Objects/Cargo5"]
 texture = ExtResource( 3 )
 script = ExtResource( 6 )
+shadow_offset = 70.0
 
 [node name="Cargo4" type="StaticBody2D" parent="Objects"]
 position = Vector2( 792, 448 )
@@ -195,6 +199,7 @@ shape = SubResource( 2 )
 [node name="Sprite" type="Sprite" parent="Objects/Cargo4"]
 texture = ExtResource( 7 )
 script = ExtResource( 6 )
+shadow_offset = 70.0
 
 [node name="Cargo10" type="StaticBody2D" parent="Objects"]
 position = Vector2( 256, 1992 )
@@ -208,6 +213,7 @@ shape = SubResource( 2 )
 [node name="Sprite" type="Sprite" parent="Objects/Cargo10"]
 texture = ExtResource( 3 )
 script = ExtResource( 6 )
+shadow_offset = 70.0
 
 [node name="Cargo" type="StaticBody2D" parent="Objects"]
 position = Vector2( 0, -200 )
@@ -221,3 +227,4 @@ shape = SubResource( 2 )
 [node name="Sprite" type="Sprite" parent="Objects/Cargo"]
 texture = ExtResource( 3 )
 script = ExtResource( 6 )
+shadow_offset = 70.0

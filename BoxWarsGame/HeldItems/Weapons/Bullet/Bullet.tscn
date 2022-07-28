@@ -4,7 +4,7 @@
 [ext_resource path="res://HeldItems/Weapons/Bullet/Bullet.gd" type="Script" id=2]
 
 [sub_resource type="CapsuleShape2D" id=1]
-radius = 2.0
+radius = 4.0
 height = 4.0
 
 [sub_resource type="Curve" id=2]
@@ -17,7 +17,6 @@ colors = PoolColorArray( 1, 1, 1, 0.294118, 1, 1, 1, 0.45098 )
 z_index = 20
 z_as_relative = false
 collision_layer = 0
-collision_mask = 0
 script = ExtResource( 2 )
 
 [node name="CollisionShape" type="CollisionShape2D" parent="."]
@@ -27,10 +26,10 @@ shape = SubResource( 1 )
 [node name="Polygon2D2" type="Polygon2D" parent="."]
 scale = Vector2( 2, 2 )
 color = Color( 0.788235, 0.541176, 0.301961, 1 )
-polygon = PoolVector2Array( -2, -3, -2, 4, 2, 4, 2, -3, 0, -5 )
+polygon = PoolVector2Array( -4, -4, -4, 4, 4, 4, 4, -4, 0, -8 )
 
 [node name="Trail" type="Line2D" parent="."]
-width = 1.0
+width = 4.0
 width_curve = SubResource( 2 )
 default_color = Color( 1, 1, 1, 1 )
 gradient = SubResource( 3 )

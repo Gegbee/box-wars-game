@@ -32,19 +32,21 @@ func initialize(_speed : float, _direction : Vector2, _damage : float):
 func _physics_process(delta):
 	var _movement = move_and_slide(velocity)
 		
-	if get_slide_count() > 0:
-		var collision = get_slide_collision(0)
-		if collision.collider.is_in_group("player"):
-			collision.collider.damage(damage)
-		rpc("destroy")
-	if (global_position - initial_position).length() > 2000:
-		rpc("destroy")
+	if get_tree().is_network_server():
+		if get_slide_count() > 0:
+			var collision = get_slide_collision(0)
+			if collision.collider.is_in_group("player"):
+				collision.collider.rpc("damage", damage)
+			rpc("destroy")
+		if (global_position - initial_position).length() > 2000:
+			rpc("destroy")
 			
 func puppet_position_set(new_value):
 	puppet_position = new_value
 	global_position = puppet_position
 	
 remotesync func destroy():
+	print("destroy func")
 	set_process(false)
 	set_physics_process(false)
 	queue_free()

@@ -70,7 +70,7 @@ remotesync func reload():
 	
 remotesync func shoot(player_rotation : float, _name : String, _rand : float):
 	$AnimationPlayer.play("Shooting")
-	pass
+	#print($AnimationPlayer.current_animation)
 	current_downtime = 0
 	can_fire = false
 	shot_timer.start(fire_rate)

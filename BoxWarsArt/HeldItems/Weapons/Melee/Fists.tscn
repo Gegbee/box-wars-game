@@ -105,6 +105,7 @@ rotation = 1.5708
 scale = Vector2( 0.1, 0.1 )
 texture = ExtResource( 2 )
 script = ExtResource( 3 )
+shadow_offset = 18.0
 
 [node name="Sprite2" type="Sprite" parent="."]
 position = Vector2( 12, 7 )
@@ -113,3 +114,4 @@ scale = Vector2( 0.1, 0.1 )
 texture = ExtResource( 2 )
 flip_h = true
 script = ExtResource( 3 )
+shadow_offset = 18.0

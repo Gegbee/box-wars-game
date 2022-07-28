@@ -105,7 +105,7 @@ func _physics_process(delta):
 	
 func exchange_items(_held_item, _next_item):
 	if _held_item:
-		rpc("remove_held_item", Global.gen_unique_node_name("DroppedItem", int(name)))
+		rpc("remove_held_item", Global.gen_unique_node_name("DroppedItem", int(name)), rand_range(0.0, 2*PI))
 	if _next_item:
 		rpc("add_held_item", _next_item.item_name,  Global.gen_unique_node_name("HeldItem", int(name)))
 		_next_item.rpc("destroy_on_all_clients")
@@ -141,9 +141,9 @@ remotesync func add_held_item(_item_name, _new_name : String):
 	add_child(held_item)
 	held_item.position = Global.held_items[held_item.item_name]["hold_position"]
 	
-remotesync func remove_held_item(_new_name : String):
+remotesync func remove_held_item(_new_name : String, dropped_item_rot : float = 0.0):
 	if Global.held_items[held_item.item_name]["drop"]:
-		Global.spawn_item(_new_name, held_item.item_name, global_position)
+		Global.spawn_item(_new_name, held_item.item_name, global_position, dropped_item_rot)
 	held_item.queue_free()
 	held_item = null
 	

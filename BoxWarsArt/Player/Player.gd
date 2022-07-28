@@ -2,7 +2,7 @@ extends KinematicBody2D
 
 var velocity := Vector2()
 
-const MAX_SPEED := 60
+const MAX_SPEED := 400
 const ACCEL : float = 10.0
 
 var cur_item_to_pickup = null

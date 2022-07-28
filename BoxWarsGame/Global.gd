@@ -78,10 +78,11 @@ remotesync func spawn_item_on_all_clients(_name : String, item_name : String, po
 	#var instance : DroppedItem = create_unique_node_instance(DROPPED_ITEM, "Item", id)
 	spawn_item(_name, item_name, pos)
 
-remote func spawn_item(_name : String, item_name : String, pos : Vector2):
+remote func spawn_item(_name : String, item_name : String, pos : Vector2, rot : float = 0.0):
 	var instance : DroppedItem = dropped_items[item_name]["scene"].instance()
 	instance.name = _name
 	instance.item_name = item_name.to_lower()
+	instance.rotation = rot
 	instance.position = pos
 	#instance.assign_sprite()
 	Objects.add_child(instance)
